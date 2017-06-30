@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<style type="text/css">
+		.line { fill: none; }	
+		#tooltip {
+			position: absolute;
+			width: 200px;
+			height: auto;
+			padding: 10px;
+			background-color: white;
+			-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+			-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+			box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+			pointer-events: none;
+		}
+		#tooltip.hidden {
+			display: none;
+		}
+		#tooltip p {
+			margin: 0;
+			font-family: sans-serif;
+		}
+		#tooltip .title {
+			text-decoration: underline;
+		}
+		.commit-circle, .legend-circle {
+			stroke-width: 0.22em;
+		}
+		.commit-circle.selected, .legend-circle.selected {
+			stroke-width: 0.40em;
+		}
+	</style>	
+</head>
+<body>
+	<div id="multiple">
+		<h1> Multiple series </h1>
+	</div>
+	<div id="dates">
+		<h1>Use dates as your axis</h1>	
+	</div>
+	<div id="custom-dates">
+		<h1>Specify your own custom format for dates</h1>	
+	</div>
+	<div id="tooltip" class="hidden">
+		<p class="title"></p>
+		<p class="desc"></p>
+		<ul class="values"></ul>
+	</div>
+
+<script type="text/javascript" src="./d3.js" charset="utf-8"></script>
+<script type="text/javascript" src="./d3-line-chart.js" charset="utf-8"></script>
+<script type="text/javascript">
+	// simplest way to plot
+	var data = {
+		name: 'points',
+		values: [{x: 1, y: 2}, {x: 2, y : 4}, {x:3, y: 3}]
+	};
+	new LineChart().for([data]).plot();
+
+	data = {
+		name: 'series a',
+		values: [{x: 1, y: 2}, {x: 2, y : 4}, {x:3, y: 3}]
+	};
+	var eata = {
+		name: 'series b',
+		values: [{x: 4, y: 1}, {x: 3, y : 2}, {x:1, y: 2}]
+	};
+	lc = new LineChart({
+		parent: '#multiple',
+		all_series: [data, eata]
+	});
+	lc.plot();
+
+	lc = new LineChart({
+		parent: '#dates',
+		x_scale: d3.time.scale()
+	});
+	var data = {
+		name: 'dates',
+		values: [{x: new Date(2014, 4, 1, 0, 0, 0, 0), y: 9},
+		{x: new Date(2014, 4, 3, 0, 0, 0, 0), y: 2},
+		{x: new Date(2014, 4, 9, 0, 0, 0, 0), y: 3}]
+	};
+	lc.for([data]).plot();
+
+  var data = {
+    name: 'custom',
+    values: [{x: "12/04/2014", y: 2}, {x: "13/04/2014", y : 4}, {x:"15/04/2014", y: 3}]
+  };
+  var lc = new LineChart({
+  	parent: '#custom-dates',
+  	x_parse: d3.time.format("%d/%m/%Y").parse,
+  	x_scale: d3.time.scale(),
+  	all_series: [data]
+  });
+  lc.plot();
+</script>
+
+</body>
+</html>

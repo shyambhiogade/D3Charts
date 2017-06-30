@@ -1,4 +1,4 @@
-# D3Chartsd3-line-chart
+d3-line-chart
 =============
 
 [![d3-line-chart API Documentation](https://www.omniref.com/js/npm/d3-line-chart.png)](https://www.omniref.com/js/npm/d3-line-chart)
